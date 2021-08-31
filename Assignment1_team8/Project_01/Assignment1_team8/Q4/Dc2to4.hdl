@@ -1,0 +1,23 @@
+/*
+2-to-4 bit decoder consists of four inputs (00,01,10,11) with outputs
+  as (1000,0100,0010,0001) respectively.
+
+x[3]=̅y[0].̅y[1]
+x[2]=y[0].̅y[1]
+x[1]=y[1].̅y[0]
+x[0]=y[0].y[1]
+*/
+
+
+CHIP Dc2to4 {
+    IN y[2];
+    OUT x[4];
+
+    PARTS:
+    Not(in = y[0], out = noty0);
+    Not(in = y[1], out = noty1);
+    And(a = noty0, b = noty1, out = x[3]);
+    And(a = noty1, b = y[0], out = x[2]);
+    And(a = y[1], b = noty0, out = x[1]);
+    And(a = y[1], b = y[0], out = x[0]);
+}

@@ -1,0 +1,37 @@
+/*
+3-to-8 bit decoder consists of eight inputs (000,001,010,011,100,101,110,111) with outputs
+  as (10000000, 01000000, 00100000, 00010000,
+00001000, 00000100, 00000010, 00000001) respectively.
+
+x[7] = ̅y[0].̅y[1]. ̅y[2]
+x[6] = y[0]. ̅y[1]. ̅y[2]
+x[5] = ̅y[0]. ̅y[2].y[1]
+x[4] = y[0]. ̅y[2].y[1]
+x[3] = ̅y[0]. ̅y[1].y[2]
+x[2] = y[0]. ̅y[1].y[2]
+x[1] = ̅y[0]. y[2].y[1]
+x[0] = y[0]. y[1].y[2]
+*/
+
+
+CHIP De3to8 {
+    IN y[3];
+    OUT x[8];
+
+    PARTS:
+    Not(in = y[0], out = noty0);
+    Not(in = y[1], out = noty1);
+    Not(in = y[2], out = noty2);
+    And(a = noty2, b = noty1, out = w1);
+    And(a = w1, b = noty0, out = x[7]);
+    And(a = w1, b = y[0], out = x[6]);
+    And(a = noty2, b = y[1], out = w2);
+    And(a = w2, b = noty0, out = x[5]);
+    And(a = w2, b = y[0], out = x[4]);
+    And(a = y[2], b = noty1, out = w3);
+    And(a = w3, b = noty0, out = x[3]);
+    And(a = w3, b = y[0], out = x[2]);
+    And(a = y[2], b = y[1], out = w4);
+    And(a = w4, b = noty0, out = x[1]);
+    And(a = w4, b = y[0], out = x[0]);
+}

@@ -1,0 +1,33 @@
+
+/* This chipset generates parity for the given 8 bit data,
+
+then it also compares with the interpreted 8-bit data y */
+
+CHIP ParityGC
+{
+  IN x0,x1,x2,x3,x4,x5,x6,x7,y0,y1,y2,y3,y4,y5,y6,y7;
+  OUT PG,z;
+  PARTS:
+
+  //this code uses the even parity scheme
+
+  Xor(a=x0, b=x1, out=out1);
+  Xor(a=x2, b=x3, out=out2);
+  Xor(a=x4, b=x5, out=out3);
+  Xor(a=x6, b=x7, out=out4);
+  Xor(a=out1, b=out2, out=out5);
+  Xor(a=out3, b=out4, out=out6);
+  Xor(a=out5, b=out6, out=out14);
+  And(a=out14, b=out14, out=PG); 
+
+  //the interpreted data is then compared to see if there is an 1-bit error                            
+ 
+  Xor(a=y0, b=y1, out=out7);
+  Xor(a=y2, b=y3, out=out8);
+  Xor(a=y4, b=y5, out=out9);
+  Xor(a=y6, b=y7, out=out10);
+  Xor(a=out7, b=out8, out=out11);
+  Xor(a=out9, b=out10, out=out12);
+  Xor(a=out11, b=out12, out=out13);
+  Xor(a=out14, b=out13, out=z);
+}

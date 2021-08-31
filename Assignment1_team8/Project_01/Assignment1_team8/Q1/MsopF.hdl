@@ -1,0 +1,41 @@
+// The BOOLEAN EXPRESSION for the respective code is w'x'z+wx'z'+xz'+yz//
+//  Characterstics of Segements of BOOLEAN EXPRESSION
+//  w'x'z includes minterms m8,m10
+//  wx'z'includes minterms m1,m3
+//  xz'includes minterm m4
+//  yz includes minterms m7,m11
+
+
+CHIP MsopF
+{
+    IN w,x,y,z; //Takes input as w,x,y,z.The binary format of the required decimal
+    OUT out; //Returns the output of boolean expression
+
+    PARTS:
+    Not(in=w, out=notw);//Returns notw
+    Not(in=x, out=notx);//Returns notx
+    Not(in=z, out=notz);//Returns notz
+
+    //Code for w'x'z includes minterms m8,m10
+    And(a=notw, b=notx, out=p); //that is-->w'.x'===(notw and notx)
+    And(a=p, b=z, out=p1); // that is-->(w'.x').z===((notw and notx) and z)
+
+    //Code for wx'z'includes minterms m1,m3
+    And(a=w, b=notx, out=q); //that is-->w.x'===(w and notx)
+    And(a=q, b=notz, out=q1);//that is-->(w.x').z'===((w and notx) and notz)
+
+    //Code for xz'includes minterm m4
+    And(a=x, b=notz, out=r1); //that is-->x.z'===(x and notz)
+
+    //Code for yz includes minterms m7,m11
+    And(a=y, b=z, out=s1); //that is-->y.z===(y and z)
+
+    //Code for w'x'z+wx'z'
+    Or(a=p1, b=q1, out=c); //that is-->((w'.x').z)+((w.x').z')===((notw and notx) and z) or ((w and notx) and notz)
+
+    //Code for xz'+yz
+    Or(a=r1, b=s1, out=d);//that is-->(x.z'+y.z)===(x and notz) or (y and z)
+
+    //Code for w'x'z+wx'z'+xz'+yz
+    Or(a=c, b=d, out=out);//that is-->((w'.x').z)+((w.x').z')+(x.z'+y.z)
+}

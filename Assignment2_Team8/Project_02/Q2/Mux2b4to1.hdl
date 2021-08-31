@@ -1,0 +1,47 @@
+CHIP Mux2b4to1 {
+
+    IN x00, x01, x10, x11, x20, x21, x30, x31, s0, s1;
+    OUT y0, y1;
+
+    PARTS:
+
+    // we know that Y = P0 + P1 + P2 + P3
+    // were P1 = S1'S0'X0, P2 = S1'S0X1, P3 = S1S0'X2, P4 = S1S0X3
+
+    Not(in = s0, out = notsel0);
+    Not(in = s1, out = notsel1);
+
+    //For P0
+
+    And(a = notsel0, b = notsel1, out = i);
+    And(a = i, b = x00, out = P00);
+    And(a = i, b = x01, out = P01);
+
+    //For P1
+
+    And(a = s0, b = notsel1, out = j);
+    And(a = j, b = x10, out = P10);
+    And(a = j, b = x11, out = P11);
+
+    //For P2
+
+    And(a = notsel0, b = s1, out = k);
+    And(a = k, b = x20, out = P20);
+    And(a = k, b = x21, out = P21);
+
+    //For P3
+
+    And(a = s0, b = s1, out = l);
+    And(a = l, b = x30, out = P30);
+    And(a = l, b = x31, out = P31);
+
+    //Now, we obtain y from the above
+
+    Or(a = P00, b = P10, out = Q00);
+    Or(a = P20, b = P30, out = Q10);
+    Or(a = Q00, b = Q10, out = y0);
+
+    Or(a = P01, b = P11, out = Q01);
+    Or(a = P21, b = P31, out = Q11);
+    Or(a = Q01, b = Q11, out = y1);
+}

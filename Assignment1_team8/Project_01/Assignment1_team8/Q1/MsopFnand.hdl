@@ -1,0 +1,29 @@
+// The BOOLEAN EXPRESSION for the respective code is w'x'z+wx'z'+xz'+yz//
+//  Characterstics of Segements of BOOLEAN EXPRESSION
+//  w'x'z includes minterms m8,m10
+//  wx'z'includes minterms m1,m3
+//  xz'includes minterm m4
+//  yz includes minterms m7,m11
+
+CHIP MsopFnand {
+    IN w, x, y, z;
+    OUT out;
+
+    PARTS:
+    Nand(a = w, b = w, out = notw);
+    Nand(a = x, b = x, out = notx);
+    Nand(a = z, b = z, out = notz);
+    Nand(a = y, b = z, out = p2);
+    Nand(a = x, b = notz, out = p3);
+    Nand(a = notw, b = notx, out = nots1);
+    Nand(a = nots1, b = nots1, out = s1);
+    Nand(a = s1, b = z, out = p1);
+    Nand(a = w, b = notx, out = nots4);
+    Nand(a = nots4, b = nots4, out = s4);
+    Nand(a = s4, b = notz, out = p4);
+    Nand(a = p1, b = p2, out = notr1);
+    Nand(a = notr1, b = notr1, out = r1);
+    Nand(a = p3, b = p4, out = notr2);
+    Nand(a = notr2, b = notr2, out = r2);
+    Nand(a = r2, b = r1, out = out);
+}

@@ -1,0 +1,22 @@
+/*
+4-to-2 bit priority encoder consists of four inputs (1xxx, 01xx, 001x, 0001)(x=0 or 1) with outputs
+  as (00, 01, 10, 11) respectively.
+
+y[1]=̅x[3].̅x[2]
+y[0]=x[2].̅x[3] + ̅x[1].̅x[3]
+
+*/
+
+CHIP EncP4to2 {
+    IN x0, x1, x2, x3;
+    OUT y0, y1;
+
+    PARTS:
+    Not(in = x1, out = notx1);
+    Not(in = x2, out = notx2);
+    Not(in = x3, out = notx3);
+    And(a = notx3, b = notx2, out = y1);
+    And(a = notx3, b = x2, out = w1);
+    And(a = notx3, b = notx1, out = w2);
+    Or(a = w1, b = w2, out = y0);
+}

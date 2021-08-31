@@ -1,0 +1,45 @@
+CHIP Mux2b4to1 {
+  IN s0,s1,x00,x01,x10,x11,x20,x21,x30,x31;
+  OUT y1,y0;
+
+  PARTS:
+  Not(in=s0, out=ns0);
+  Not(in=s1, out=ns1);
+
+  // we know that Y = a1 + a2 + a3 + a4
+  // were a1 = S1'S0'X0, a2 = S1'S0X1, a3 = S1S0'X2, a4 = S1S0X3
+
+  //for a1
+
+  And(a=ns1, b=ns0, out=ns1ns0);
+  And(a=ns1ns0, b=x00, out=a1);
+
+  //for a2
+
+  And(a=ns1, b=s0, out=ns1s0);
+  And(a=ns1s0, b=x10, out=a2);
+
+  //for a3
+  And(a=s1, b=ns0, out=s1ns0);
+  And(a=s1ns0, b=x20, out=a3);
+
+  //for a4
+  And(a=s1, b=s0, out=s1s0);
+  And(a=s1s0, b=x30, out=a4);
+
+  //get the output for  the first bit
+  Or(a=a1, b=a2, out=a5);
+  Or(a=a5, b=a3, out=a6);
+  Or(a=a6, b=a4, out=y0);
+
+  //for the output for second bit
+
+  And(a=ns1ns0, b=x01, out=b1);
+  And(a=ns1s0, b=x11, out=b2);
+  And(a=s1ns0, b=x21, out=b3);
+  And(a=s1s0, b=x31, out=b4);
+
+  Or(a=b1, b=b2, out=b5);
+  Or(a=b5, b=b3, out=b6);
+  Or(a=b6, b=b4, out=y1);
+}

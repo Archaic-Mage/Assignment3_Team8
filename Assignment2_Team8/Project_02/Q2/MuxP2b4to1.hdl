@@ -1,0 +1,17 @@
+CHIP MuxP2b4to1 {
+    
+    IN r0, r1, r2, r3, x00, x01, x10, x11, x20, x21, x30, x31;
+    OUT y0, y1;
+
+    PARTS:
+
+    //first the request lines are passed through a 4-to-2 bit priotity encoder 
+    //this gives the values of the selector lines 
+
+    //the encoder logic is specified in the CHIP itself
+
+    EncP4to2(x0 = r0, x1 = r1, x2 = r2, x3 = r3, y0 = s0, y1 = s1); 
+
+    //then with the selector lines, we pass the inputs through a 2bit 4-to-1 Multiplexer
+    Mux2b4to1(x00 = x00, x01 = x01, x10 = x10, x11 = x11, x20 = x20, x21 = x21, x30 = x30, x31 = x31, s0 = s0, s1 = s1, y0 = y0, y1 = y1);
+}

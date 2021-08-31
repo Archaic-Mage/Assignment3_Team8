@@ -1,0 +1,15 @@
+/*
+4-to-2 bit encoder consists of four inputs (1000, 0100, 0010, 0001) with outputs
+as (00, 01, 10, 11) respectively.
+
+y[1]=x[0]+x[1]
+y[0]=x[0]+x[2]
+*/
+CHIP Enc4to2 {
+    IN x[4];
+    OUT y[2];
+
+    PARTS:
+    Or(a = x[0], b = x[1], out = y[1]);
+    Or(a = x[0], b = x[2], out = y[0]);
+}

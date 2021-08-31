@@ -1,0 +1,63 @@
+CHIP DeMux2b1to8 {
+
+    IN x[2], s[3];
+    OUT y0[2], y1[2], y2[2], y3[2], y4[2], y5[2], y6[2], y7[2];
+
+    PARTS:
+
+    //for demux of 1 to 8, if sel = 111 then y7 should take the value of x
+
+    // Similarily for s =  0  0  0 - y0
+                        //  s2 s1 s0        
+    //                s = 001 - y1 and so on...
+
+    //not of the sel lines
+
+    Not(in=s[2], out=s2not);
+    Not(in=s[1], out=s1not);
+    Not(in=s[0], out=s0not);
+
+    //the result for y0 = s0's1's2'x, y1 = s0s1's2'x, y2 = s0's1s2'x, y3 = s0s1s2'x,
+    // y4 = s0's1's2x, y5= s0s1's2x, y6 = s0's1s2x, y7 = s0s1s2x
+
+    //following the above logic the code below is executed
+      
+   
+    And(a=s2not, b=s1not, out=w1);
+    And(a=s2not, b=s0not, out=w2);
+    And(a=s0not, b=s1not, out=w3);
+    And(a=s[0], b=s[1], out=w4);
+    And(a=s[2], b=s[1], out=w5);
+    And(a=s[0], b=s[2], out=w6);
+
+   And(a=w1, b=s0not, out=m0);
+   And(a=w1, b=s[0], out=m1);
+   And(a=w2, b=s[1], out=m2);
+   And(a=w4, b=s2not, out=m3);
+   And(a=w3, b=s[2], out=m4);
+   And(a=w6, b=s1not, out=m5);
+   And(a=w5, b=s0not, out=m6);
+   And(a=w4, b=s[2], out=m7);
+
+   //output for the second  bit
+
+   And(a=m0, b=x[1], out=y0[1]);
+   And(a=m1, b=x[1], out=y1[1]);
+   And(a=m2, b=x[1], out=y2[1]); 
+   And(a=m3, b=x[1], out=y3[1]);
+   And(a=m4, b=x[1], out=y4[1]);
+   And(a=m5, b=x[1], out=y5[1]);
+   And(a=m6, b=x[1], out=y6[1]);
+   And(a=m7, b=x[1], out=y7[1]);
+
+   //out put for the first bit
+   
+   And(a=m0, b=x[0], out=y0[0]);
+   And(a=m1, b=x[0], out=y1[0]);
+   And(a=m2, b=x[0], out=y2[0]); 
+   And(a=m3, b=x[0], out=y3[0]);
+   And(a=m4, b=x[0], out=y4[0]);
+   And(a=m5, b=x[0], out=y5[0]);
+   And(a=m6, b=x[0], out=y6[0]);
+   And(a=m7, b=x[0], out=y7[0]);
+}
