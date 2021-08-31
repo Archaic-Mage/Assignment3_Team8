@@ -1,0 +1,30 @@
+//OUT = S0.X0 + S0'.S1.X1 + S0'.S1'.S2 X2 + S0'.S1'.S2'.S3.X3
+CHIP Pmux {
+IN x00,x01,x10,x11,x20,x21,x30,x31,s0,s1,s2,s3;
+OUT y0,y1;
+
+PARTS:
+And(a=s0, b=x00, out=a1);
+And(a=s0, b=x01, out=b1);
+Not(in=s0, out=ns0);
+And(a=ns0, b=s1, out=ns0s1);
+And(a=ns0s1, b=x10, out=a2);
+And(a=ns0s1, b=x11, out=b2);
+Not(in=s1, out=ns1);
+And(a=ns0, b=ns1, out=ns0ns1);
+And(a=ns0ns1, b=s2, out=ns0ns1s2);
+And(a=ns0ns1s2, b=x20, out=a3);
+And(a=ns0ns1s2, b=x21, out=b3);
+Not(in=s2, out=ns2);
+And(a=ns0ns1, b=ns2, out=ns0ns1ns2);
+And(a=ns0ns1ns2, b=s3, out=ns0ns1ns2s3);
+And(a=ns0ns1ns2s3, b=x30, out=a4);
+And(a=ns0ns1ns2s3, b=x31, out=b4);
+
+Or(a=a1, b=a2, out=a5);
+Or(a=a5, b=a3, out=a6);
+Or(a=a6, b=a4, out=y0);
+Or(a=b1, b=b2, out=b5);
+Or(a=b5, b=b3, out=b6);
+Or(a=b6, b=b4, out=y1);
+}

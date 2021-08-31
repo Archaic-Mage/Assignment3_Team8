@@ -1,0 +1,44 @@
+CHIP demux {
+IN s0,s1,s2,x0,x1;
+OUT y00,y01,y10,y11,y20,y21,y30,y31,y40,y41,y50,y51,y60,y61,y70,y71;
+
+PARTS:
+Not(in=s0, out=ns0);
+Not(in=s1, out=ns1);
+Not(in=s2, out=ns2);
+And(a=ns0, b=ns1, out=ns0ns1);
+And(a=ns0ns1, b=ns2, out=ns0ns1ns2);
+And(a=ns0ns1ns2, b=x0, out=y00);
+And(a=ns0ns1ns2, b=x1, out=y01);
+
+And(a=ns0ns1, b=s2, out=ns0ns1s2);
+And(a=ns0ns1s2, b=x0, out=y10);
+And(a=ns0ns1ns2, b=x1, out=y11);
+
+And(a=ns0, b=s1, out=ns0s1);
+And(a=ns0s1, b=ns2, out=ns0s1ns2);
+And(a=ns0s1ns2, b=x0, out=y20);
+And(a=ns0s1ns2, b=x1, out=y21);
+
+And(a=ns0ns1, b=s2, out=ns0s1s2);
+And(a=ns0s1s2, b=x0, out=y30);
+And(a=ns0s1s2, b=x1, out=y31);
+
+And(a=s0, b=ns1, out=s0ns1);
+And(a=s0ns1, b=ns2, out=s0ns1ns2);
+And(a=s0ns1ns2, b=x0, out=y40);
+And(a=ns0ns1ns2, b=x1, out=y41);
+
+And(a=s0ns1, b=s2, out=s0ns1s2);
+And(a=s0ns1s2, b=x0, out=y50);
+And(a=s0ns1s2, b=x1, out=y51);
+
+And(a=s0, b=s1, out=s0s1);
+And(a=s0s1, b=ns2, out=s0s1ns2);
+And(a=s0s1ns2, b=x0, out=y60);
+And(a=s0s1ns2, b=x1, out=y61);
+
+And(a=s0s1, b=s2, out=s0s1s2);
+And(a=s0s1s2, b=x0, out=y70);
+And(a=s0s1s2, b=x1, out=y71);
+}
