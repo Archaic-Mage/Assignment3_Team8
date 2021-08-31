@@ -1,0 +1,86 @@
+CHIP CLA4bA {
+    IN x[4], y[4], ci;
+    OUT co, z[4];
+
+    PARTS:
+
+    //creating the propogating terms 
+
+    Xor(a = x[0], b = y[0], out = p0);
+    Xor(a = x[1], b = y[1], out = p1);
+    Xor(a = x[2], b = y[2], out = p2);
+    Xor(a = x[3], b = y[3], out = p3);
+
+    //creating the generate terms 
+
+    And(a = x[0], b = y[0], out = g0);
+    And(a = x[1], b = y[1], out = g1);
+    And(a = x[2], b = y[2], out = g2);
+    And(a = x[3], b = y[3], out = g3);
+
+    //generating the carry terms based on the propogating and generate terms
+
+    //given the carry in we generate the other carry terms
+
+    //we create all the 'And' related propogating terms
+
+    //linking the carry in and generate terms with propogating terms using 'and' gate
+
+    And(a = p0, b = ci, out = cp0);
+    And(a = p1, b = cp0, out = cp01);
+    And(a = p1, b = g0, out = g0p1);
+    And(a = p2, b = cp01, out = cp012);
+    And(a = p2, b = g0p1, out = g0p12);
+    And(a = p2, b = g1, out = g1p2);
+    And(a = p3, b = cp012, out = cp0123);
+    And(a = p3, b = g0p12, out = g0p123);
+    And(a = p3, b = g1p2, out = g1p23);
+    And(a = p3, b = g2, out = g2p3);
+
+    //Generating the carrying terms
+
+    //c1
+
+    Or(a = cp0, b = g0, out = c1);
+
+    //c2
+
+    Or(a = cp01, b = g0p1, out = h1c2);
+    Or(a = h1c2, b = g1, out = c2);
+
+    //c3
+
+    Or(a = cp012, b = g0p12, out = h1c3);
+    Or(a = h1c3, b = g1p2, out = h2c3);
+    Or(a = h2c3, b = g2, out = c3);
+
+    //c4
+
+    Or(a = cp0123, b = g0p123, out = h1c4);
+    Or(a = h1c4, b = g1p23, out = h2c4);
+    Or(a = h2c4, b = g2p3, out = h3c4);
+    Or(a = h3c4, b = g3, out = co);
+
+    //generating sum terms using the carry
+
+    //z0
+
+    Xor(a = x[0], b = y[0], out = x0y0);
+    Xor(a = x0y0, b = ci, out = z[0]);
+
+    //z1
+
+    Xor(a = x[1], b = y[1], out = x1y1);
+    Xor(a = x1y1, b = c1, out = z[1]);
+
+    //z2
+
+    Xor(a = x[2], b = y[2], out = x2y2);
+    Xor(a = x2y2, b = c2, out = z[2]);
+
+    //z3
+
+    Xor(a = x[3], b = y[3], out = x3y3);
+    Xor(a = x3y3, b = c3, out = z[3]);   
+
+}

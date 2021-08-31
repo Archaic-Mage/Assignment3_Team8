@@ -1,0 +1,21 @@
+CHIP CLA4b16bA {
+    IN x[16], y[16];
+    OUT z[16], isoverflow;
+
+    PARTS:
+
+    CLA4bA(x = x[0..3], y = y[0..3], ci = false, co = c4, z = z[0..3]);
+    CLA4bA(x = x[4..7], y = y[4..7], ci = c4, co = c8, z = z[4..7]);
+    CLA4bA(x = x[8..11], y = y[8..11], ci = c8, co = c12, z = z[8..11]);
+    CLA4bA(x = x[12..15], y = y[12..15], ci = c12, co = c16, z[0..2] = z[12..14], z[3] = s);
+
+    And(a = s, b = s, out = z[15]);
+
+    //overflow logic if the x[15], y[15] are same and z[15] is different then it is overflow
+
+    //(x[15] XOR z[15]) AND (y[15] XOR z[15]) == isoverflow
+
+    Xor(a = x[15], b = s, out = comp1);
+    Xor(a = y[15], b = s, out = comp2);
+    And(a = comp1, b = comp2, out = isoverflow); 
+}
