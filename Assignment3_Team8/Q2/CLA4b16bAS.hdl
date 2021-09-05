@@ -1,0 +1,39 @@
+CHIP CLA4b16bAS {
+    IN x[16], y[16], AS;
+    OUT z[16], isoverflow;
+
+    PARTS:
+    
+    //In a subtractor we have to convert the y term to its one's complement form and pass carry 0 as AS
+    
+    //AS = 1 for subtraction and 0 for addition
+    
+    //first one's complement is performed using Xor and the result is passed through carry look ahead adder for 4bits
+    
+    Xor4b(a = y[0..3], b[0] = AS, b[1] = AS, b[2] = AS, b[3] = AS, out = w0);
+
+    CLA4bA(x = x[0..3], y = w0, ci = AS, co = c4, z = z[0..3]);
+    
+    Xor4b(a = y[4..7], b[0] = AS, b[1] = AS, b[2] = AS, b[3] = AS, out = w1);
+    
+    CLA4bA(x = x[4..7], y = w1, ci = c4, co = c8, z = z[4..7]);
+    
+    Xor4b(a = y[8..11], b[0] = AS, b[1] = AS, b[2] = AS, b[3] = AS, out = w2);
+    
+    CLA4bA(x = x[8..11], y = w2, ci = c8, co = c12, z = z[8..11]);
+    
+    //here we get the compare term for the overflow logic
+    
+    Xor4b(a = y[12..15], b[0] = AS, b[1] = AS, b[2] = AS, b[3] = AS, out = w3, out[3] = compare);
+    
+    CLA4bA(x = x[12..15], y = w3, ci = c12, co = c16, z[0..3] = z[12..15], z[3] = s);
+
+
+    //overflow logic if the x[15], (y[15] XOR AS) are same and z[15] is different then it is overflow
+
+    //(x[15] XOR z[15]) AND ((y[15] XOR AS) XOR z[15]) == isoverflow
+
+    Xor(a = x[15], b = s, out = comp1);
+    Xor(a = compare, b = s, out = comp2);
+    And(a = comp1, b = comp2, out = isoverflow); 
+}
