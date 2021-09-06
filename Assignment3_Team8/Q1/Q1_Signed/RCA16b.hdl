@@ -5,7 +5,7 @@ CHIP RCA16b
    //Takes input as a 16-bit signed integer X,a 16-bit signed integer Y and bit AorS to decide Addition or Subtraction
    //AorS=0 implies Addition
    //AorS=1 implies Subtraction
-   OUT z[16],OVF;
+   OUT z[16],isoverflow;
    //Outputs a 16-bit signed integer Z and Overflow bit
    PARTS:
    //Sequences of XOR gates changes Y into 2's Complement if AorS is subtraction
@@ -44,6 +44,6 @@ CHIP RCA16b
    Fulladder(xi=x[14], yi=y14, ci=c14, si=z[14], ci1=c15);   
    Fulladder(xi=x[15], yi=y15, ci=c15, si=z[15], ci1=c16);
    //Performs XOR operation between carry15 and carry16 to find the overflow bit
-   Xor(a=c15, b=c16, out=OVF);
+   Xor(a=c15, b=c16, out=isoverflow);
 }
 	
