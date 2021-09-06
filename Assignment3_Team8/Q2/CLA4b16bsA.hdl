@@ -1,4 +1,4 @@
-CHIP CLA4b16bA {
+CHIP CLA4b16bsA {
     IN x[16], y[16];
     OUT z[16], isoverflow;
 
@@ -13,7 +13,9 @@ CHIP CLA4b16bA {
 
     //overflow logic if the x[15], y[15] are same and z[15] is different then it is overflow
 
-    //(x[15] XOR z[15]) AND (y[15] XOR z[15]) == isoverflow
+    //(x[15] XOR z[15]) AND (y[15] XOR z[15]) == isoverflow 
+
+    //this overflow logic is for signed integers
 
     Xor(a = x[15], b = s, out = comp1);
     Xor(a = y[15], b = s, out = comp2);
