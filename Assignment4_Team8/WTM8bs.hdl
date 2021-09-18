@@ -136,7 +136,7 @@ CHIP WTM8bs {
 
     /**At this level we use 16-bit CLA based adder**/
 
-    CLA4bH16buA(x = c40, y = s40, AS = false, z[0..15] = z, z[8..15] = overflow);
+    CLA4bH16buA(x = c40, y = s40, AS = false, z[0..15] = z, z[7..15] = overflow);
 
 
     // Now, we check wether there is overflow or not

@@ -1,5 +1,5 @@
 CHIP checkOverflows {
-    IN in[8], x, y;
+    IN in[9], x, y;
     OUT out;
 
     PARTS: 
@@ -9,7 +9,8 @@ CHIP checkOverflows {
     Or(a = in[0], b = in[1], out = o1);
     Or(a = in[2], b = in[3], out = o2);
     Or(a = in[4], b = in[5], out = o3);
-    Or(a = in[6], b = in[7], out = o4);
+    Or(a = in[6], b = in[7], out = o41);
+    Or(a = o41, b = in[8], out = o4);
     Or(a = o1, b = o2, out = o11);
     Or(a = o3, b = o4, out = o12);
     Or(a = o11, b = o12, out = p);
@@ -24,11 +25,13 @@ CHIP checkOverflows {
     Not(in = in[5], out = notin5);
     Not(in = in[6], out = notin6);
     Not(in = in[7], out = notin7);
+    Not(in = in[8], out = notin8);
 
     Or(a = notin0, b = notin1, out = no1);
     Or(a = notin2, b = notin3, out = no2);
     Or(a = notin4, b = notin5, out = no3);
-    Or(a = notin6, b = notin7, out = no4);
+    Or(a = notin6, b = notin7, out = no41);
+    Or(a = no41, b = notin8, out = no4);
     Or(a = no1, b = no2, out = no11);
     Or(a = no3, b = no4, out = no12);
     Or(a = no11, b = no12, out = notp);
