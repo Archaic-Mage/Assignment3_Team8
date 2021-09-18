@@ -51,7 +51,7 @@ CHIP WTM8bu {
 
     // Now, we check wether there is overflow or not
 
-    checkOverflow(in = overflow, out = isoverflow);
+    checkOverflowu(in = overflow, out = isoverflow);
 
 
 }

@@ -1,4 +1,4 @@
-CHIP checkOverflow {
+CHIP checkOverflowu {
     IN in[8];
     OUT out;
 
