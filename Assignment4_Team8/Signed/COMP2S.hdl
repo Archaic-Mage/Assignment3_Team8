@@ -1,0 +1,24 @@
+CHIP COMP2S
+{
+   IN a[8]; 
+   OUT b[8];
+   PARTS:
+   Not(in=a[0], out=a0);
+   Not(in=a[1], out=a1);
+   Not(in=a[2], out=a2);
+   Not(in=a[3], out=a3);
+   Not(in=a[4], out=a4);
+   Not(in=a[5], out=a5);
+   Not(in=a[6], out=a6);
+   Not(in=a[7], out=a7);
+   //Using Fulladder gate to perform addition between carry bit and both the inputs of X,Y
+   Fulladder(xi=a0, yi=true, ci=false, si=b[0], ci1=c1);
+   Fulladder(xi=a1, yi=false, ci=c1, si=b[1], ci1=c2);
+   Fulladder(xi=a2, yi=false, ci=c2, si=b[2], ci1=c3);
+   Fulladder(xi=a3, yi=false, ci=c3, si=b[3], ci1=c4);
+   Fulladder(xi=a4, yi=false, ci=c4, si=b[4], ci1=c5);
+   Fulladder(xi=a5, yi=false, ci=c5, si=b[5], ci1=c6);
+   Fulladder(xi=a6, yi=false, ci=c6, si=b[6], ci1=c7);
+   Fulladder(xi=a7, yi=false, ci=c7, si=b[7], ci1=c8);
+}
+	
