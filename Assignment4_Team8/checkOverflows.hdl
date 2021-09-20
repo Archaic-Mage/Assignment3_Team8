@@ -1,3 +1,6 @@
+/**This chip defines the overflow logic for signed integer multiplication**/
+
+
 CHIP checkOverflows {
     IN in[9], x, y;
     OUT out;
@@ -44,6 +47,8 @@ CHIP checkOverflows {
     // x_{n-1} exclusive nor y_{n-1};
 
     Not(in = xorXY, out = xnorXY);
+
+    //this is overflow logic when sign is same or sign is diff
 
     And(a = p, b = xnorXY, out = t1);
     And(a = notp, b = xorXY, out = t2);

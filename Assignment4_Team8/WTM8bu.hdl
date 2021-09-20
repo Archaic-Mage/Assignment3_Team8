@@ -1,3 +1,6 @@
+/**this is wallace tree multiplier for 8-bit integers - unsigned**/
+
+
 CHIP WTM8bu {
     IN x[8], y[8];
     OUT isoverflow, z[8];

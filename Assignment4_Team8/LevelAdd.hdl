@@ -1,3 +1,8 @@
+/**this chip adds 2 16bit integers in each level**/
+
+//this uses 16 full adder chips
+
+
 CHIP LevelAdd {
     IN p[16], q[16], r[16];
     OUT c[16], s[16], isoverflow;
