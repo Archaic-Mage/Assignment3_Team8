@@ -1,3 +1,4 @@
+/**this is test file for unsigned multiplier**/
 load WTM8bu.hdl;
 output-file WTM8bu.out,
 compare-to WTM8bu.cmp,
