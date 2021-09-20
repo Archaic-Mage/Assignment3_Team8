@@ -1,3 +1,5 @@
+/** this is test file for signed multiplier**/
+
 load WTM8bs.hdl;
 output-file WTM8bs.out,
 compare-to WTM8bs.cmp,
