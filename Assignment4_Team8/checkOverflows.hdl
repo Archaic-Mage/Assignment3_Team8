@@ -1,11 +1,12 @@
 /**This chip defines the overflow logic for signed integer multiplication**/
-
+/** check0 input gives if the output of multiplier is 0 or not which helps in avoiding overflow
+   when operands are 0 and a negative number **/
 
 CHIP checkOverflows {
-    IN in[9], x, y;
+    IN in[9], x, y, check0;
     OUT out;
 
-    PARTS: 
+    PARTS:
 
     // p_{n-1} + p_{n} + ... p_{2n-1};
 
@@ -38,9 +39,9 @@ CHIP checkOverflows {
     Or(a = no1, b = no2, out = no11);
     Or(a = no3, b = no4, out = no12);
     Or(a = no11, b = no12, out = notp);
-    
 
-    // x_{n-1} Xor y_{n-1} 
+
+    // x_{n-1} Xor y_{n-1}
 
     Xor(a = x, b = y, out = xorXY);
 
@@ -52,5 +53,6 @@ CHIP checkOverflows {
 
     And(a = p, b = xnorXY, out = t1);
     And(a = notp, b = xorXY, out = t2);
-    Or(a = t1, b = t2, out = out);
+    Or(a = t1, b = t2, out = t1t2);
+    And(a=t1t2, b=check0, out=out);
 }
