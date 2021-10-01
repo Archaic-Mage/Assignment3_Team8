@@ -1,7 +1,7 @@
 //TEST CASES FOR LOGICAL OPERATIONS(NOP,AND,OR,XOR)
 load ALU.hdl;
 output-file logicalop.out,
-//compare-to logicalop.cmp,
+compare-to logicalop.cmp,
 output-list x%B1.8.1 y%B1.8.1 z%B1.8.1 OF%B3.1.3 EQ%B3.1.3; 
 
 //1 pair of operand with X not equal to Y for NOP

@@ -1,7 +1,7 @@
 //TEST CASES FOR ARTHMETIC OPERATIONS RESULT IN OVERFLOW
 load ALU.hdl;
 output-file arithof.out,
-//compare-to arithof.cmp,
+compare-to arithof.cmp,
 output-list x%B1.8.1 y%B1.8.1 z%B1.8.1 OF%B3.1.3 EQ%B3.1.3; 
 
 //1 pair of operand for Unsigned addition results in overflow

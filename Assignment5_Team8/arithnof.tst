@@ -1,7 +1,7 @@
 //TEST CASES FOR ARTHMETIC OPERATIONS WHICH DOES NOT RESULT IN OVERFLOW
 load ALU.hdl;
 output-file arithnof.out,
-//compare-to arithnof.cmp,
+compare-to arithnof.cmp,
 output-list x%B1.8.1 y%B1.8.1 z%B1.8.1 OF%B3.1.3 EQ%B3.1.3; 
 
 //1 pair of operand for Unsigned addition
