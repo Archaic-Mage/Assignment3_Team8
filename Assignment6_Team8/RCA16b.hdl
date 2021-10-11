@@ -1,0 +1,32 @@
+//Parallel Adder/Subtractor using 8-bit Ripple Carry Adder
+CHIP RCA16b
+{
+   IN x[9],y[9],AorS; 
+   //Takes input as a 16-bit signed integer X,a 16-bit signed integer Y and bit AorS to decide Addition or Subtraction
+   //AorS=0 implies Addition
+   //AorS=1 implies Subtraction
+   OUT z[8];
+   //Outputs a 16-bit signed integer Z and Overflow bit
+   PARTS:
+   //Sequences of XOR gates changes Y into 2's Complement if AorS is subtraction
+   //Y remains unchanged if AorS is addition
+   Xor(a=AorS, b=y[0], out=y0);
+   Xor(a=AorS, b=y[1], out=y1);
+   Xor(a=AorS, b=y[2], out=y2);
+   Xor(a=AorS, b=y[3], out=y3);
+   Xor(a=AorS, b=y[4], out=y4);
+   Xor(a=AorS, b=y[5], out=y5);
+   Xor(a=AorS, b=y[6], out=y6);
+   Xor(a=AorS, b=y[7], out=y7);
+   Xor(a=AorS, b=y[8], out=y8);
+   //Using Fulladder gate to perform addition between carry bit and both the inputs of X,Y
+   Fulladder(xi=x[0], yi=y0, ci=AorS, si=z[0], ci1=c1);
+   Fulladder(xi=x[1], yi=y1, ci=c1, si=z[1], ci1=c2);
+   Fulladder(xi=x[2], yi=y2, ci=c2, si=z[2], ci1=c3);
+   Fulladder(xi=x[3], yi=y3, ci=c3, si=z[3], ci1=c4);
+   Fulladder(xi=x[4], yi=y4, ci=c4, si=z[4], ci1=c5);
+   Fulladder(xi=x[5], yi=y5, ci=c5, si=z[5], ci1=c6);
+   Fulladder(xi=x[6], yi=y6, ci=c6, si=z[6], ci1=c7);
+   Fulladder(xi=x[7], yi=y7, ci=c7, si=z[7], ci1=c8);
+}
+	

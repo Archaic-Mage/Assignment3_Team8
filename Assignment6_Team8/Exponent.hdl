@@ -1,0 +1,11 @@
+CHIP Exponent
+{
+   IN x[8],y[8],Bias[8],P15;
+   OUT z[8];
+   PARTS:
+   RCA16b9(x[0..7]=x[0..7] , y[0..7]=y[0..7] , AorS=false , z[0..8]=z1);
+   RCA16b(x[0..8]=z1 ,y[8]=false, y[0..7]=Bias , AorS=true , z[0..7]=z2);
+   RCA16b9(x[0..7]=Bias , y[0..7]=true ,AorS=false , z[0..8]=z3); 
+   RCA16b(x[0..8]=z1 , y[0..8]=z3 , AorS=true , z[0..7]=z4);
+   Mux2to1(x0[0..7]=z2 , x1[0..7]=z4 , s=P15 , out[0..7]=z[0..7]);   
+}
