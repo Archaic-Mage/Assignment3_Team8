@@ -1,0 +1,15 @@
+CHIP HackALU
+{
+   IN x[16],y[16],zx,nx,zy,ny,f,no;
+   OUT z[16],zr,ng; 
+   
+   PARTS:
+   GetP(a[0..15]=x[0..15], b[0..15]=false, zx=zx, nx=nx, 
+   p[0..15]=p);
+   GetQ(a[0..15]=y[0..15], b[0..15]=false, zy=zy, ny=ny,
+   q[0..15]=q);
+   Out(p[0..15]=p, q[0..15]=q, f=f, no=no, out[0..15]=z[0..15], zr=zr, ng=ng);
+   
+   
+
+}
