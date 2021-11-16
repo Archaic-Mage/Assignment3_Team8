@@ -34,7 +34,7 @@ CHIP CPU {
                      // the current program (reset=0).
 
 
-    OUT outM[16],writeM, addressM[15],pc[15];     // M value output Write into M?  Address in data memory (of M) address of next instruction
+    OUT outM[16],writeM, addressM[15],pc[15];       // M value output Write into M?  Address in data memory (of M) address of next instruction
 
   PARTS:
 	Not(in=instruction[15],out=ni);
